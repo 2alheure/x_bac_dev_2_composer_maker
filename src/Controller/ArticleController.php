@@ -25,4 +25,12 @@ class ArticleController extends AbstractController {
             'article' => $article
         ]);
     }
+
+    #[Route('/articles/{id}/remove', name: 'article_remove')]
+    public function remove(Article $article, EntityManagerInterface $em): Response {
+        $em->remove($article);
+        $em->flush();
+
+        return $this->redirectToRoute('articles');
+    }
 }

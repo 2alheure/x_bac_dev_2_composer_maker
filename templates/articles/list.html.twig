@@ -10,9 +10,13 @@
 		<div class="mb-4 p-4 border rounded">
 			<h2 class="font-bold">{{ a.titre }}</h2>
 			<p>{{ a.contenu }}</p>
-            <p class="text-center">
-                <a href="{{ path('article_details', {id: a.id}) }}" class="text-blue-500">Voir l'article</a>
-            </p>
+			<p class="flex gap-8 justify-center">
+				<a href="{{ path('article_details', {id: a.id}) }}" class="text-blue-500">Voir l'article</a>
+
+				<a href="{{ path('article_remove', {id: a.id}) }}" class="text-red-500" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">
+					Supprimer l'article
+				</a>
+			</p>
 		</div>
 	{% endfor %}
 {% endblock %}
