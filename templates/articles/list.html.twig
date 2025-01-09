@@ -13,11 +13,13 @@
 			<p class="flex gap-8 justify-center">
 				<a href="{{ path('article_details', {id: a.id}) }}" class="text-blue-500">Voir l'article</a>
 				
-				<a href="{{ path('article_update', {id: a.id}) }}" class="text-orange-500">Modifier l'article</a>
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('article_update', {id: a.id}) }}" class="text-orange-500">Modifier l'article</a>
 
-				<a href="{{ path('article_remove', {id: a.id}) }}" class="text-red-500" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">
-					Supprimer l'article
-				</a>
+					<a href="{{ path('article_remove', {id: a.id}) }}" class="text-red-500" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">
+						Supprimer l'article
+					</a>
+				{% endif %}
 			</p>
 		</div>
 	{% endfor %}

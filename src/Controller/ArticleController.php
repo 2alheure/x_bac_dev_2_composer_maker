@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ArticleController extends AbstractController {
     #[Route('/articles', name: 'articles')]
@@ -21,6 +22,7 @@ class ArticleController extends AbstractController {
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/articles/new', name: 'article_create')]
     public function new(EntityManagerInterface $em, Request $request): Response {
         $article = new Article;
@@ -41,6 +43,7 @@ class ArticleController extends AbstractController {
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/articles/{id}/update', name: 'article_update')]
     public function update(Article $article, EntityManagerInterface $em, Request $request): Response {
 
@@ -60,6 +63,7 @@ class ArticleController extends AbstractController {
         ]);
     }
 
+    #[IsGranted('ROLE_ADMIN')]
     #[Route('/articles/{id}/remove', name: 'article_remove')]
     public function remove(Article $article, EntityManagerInterface $em): Response {
         $em->remove($article);

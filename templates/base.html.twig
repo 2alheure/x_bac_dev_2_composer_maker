@@ -20,8 +20,18 @@
 			<nav class="flex gap-8 justify-start w-3/4 mx-auto">
 				<a href="{{ path('app_home') }}">Accueil</a>
 				<a href="{{ path('articles') }}">Mes articles</a>
-				<a href="{{ path('article_create') }}">Ajouter un article</a>
+
+				{% if is_granted('ROLE_ADMIN') %}
+					<a href="{{ path('article_create') }}">Ajouter un article</a>
+				{% endif %}
+
 				<a href="">Formulaire de contact</a>
+
+				{% if app.user %}
+					<a href="{{ path('app_logout') }}">Déconnexion</a>
+				{% else %}
+					<a href="{{ path('app_login') }}">Connexion</a>
+				{% endif %}
 			</nav>
 		</header>
 
