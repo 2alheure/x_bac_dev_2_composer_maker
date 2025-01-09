@@ -35,16 +35,28 @@ class ArticleController extends AbstractController {
             return $this->redirectToRoute('articles');
         }
 
-        return $this->render('articles/new.html.twig', [
-            'formulaire' => $form
+        return $this->render('articles/form.html.twig', [
+            'formulaire' => $form,
+            'action' => 'Ajouter',
         ]);
     }
 
+    #[Route('/articles/{id}/update', name: 'article_update')]
+    public function update(Article $article, EntityManagerInterface $em, Request $request): Response {
 
-    #[Route('/articles/{id}', name: 'article_details')]
-    public function details(Article $article): Response {
-        return $this->render('articles/details.html.twig', [
-            'article' => $article
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->persist($article);
+            $em->flush();
+
+            return $this->redirectToRoute('articles');
+        }
+
+        return $this->render('articles/form.html.twig', [
+            'formulaire' => $form,
+            'action' => 'Modifier',
         ]);
     }
 
@@ -54,5 +66,13 @@ class ArticleController extends AbstractController {
         $em->flush();
 
         return $this->redirectToRoute('articles');
+    }
+
+
+    #[Route('/articles/{id}', name: 'article_details')]
+    public function details(Article $article): Response {
+        return $this->render('articles/details.html.twig', [
+            'article' => $article
+        ]);
     }
 }

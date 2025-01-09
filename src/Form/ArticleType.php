@@ -32,9 +32,7 @@ class ArticleType extends AbstractType {
             ->add('date', DateType::class, [
                 'widget' => 'single_text',
                 'constraints' => [
-                    new Assert\NotBlank,
                     new Assert\LessThanOrEqual('today'),
-                    new Assert\Date,
                 ],
             ])
             ->add('image', UrlType::class, [
